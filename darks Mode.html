@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+       #s{
+        display: fixed;
+
+        margin-left:25%;
+        margin-top:6%;
+       }
+        #dmode{
+            position: absolute;
+            display: none;
+
+        }
+        #d{
+            background-color: rgb(0, 0, 0);
+            width: 100px;
+            height: 40px;
+            position: relative;
+            border-radius: 20px;
+        }
+      #dbtn{
+        position: absolute;
+        height:40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color:yellow;
+        width:40px;
+        border-radius: 50%;
+        transition: 500ms;
+      }
+      #dmode:checked+#dbtn{
+        transform: translate(60px);
+        background-color: red;
+      }
+      #main {
+  margin: 25px auto;
+  width: 500px;
+  font-family: Arial, sans-serif;
+
+}
+
+#section {
+  padding: 20px;
+  background-color: blanchedalmond;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"] {
+  height: 30px;
+  width: calc(100% - 10px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#result {
+  height: fit-content;
+  margin-top: 10px;
+  padding: 10px;
+  text-align: center;
+  list-style: circle;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+    </style>
+</head>
+<body>
+  <div id="s">
+    <div id="d">
+      <input type="checkbox" id="dmode">
+      <label for="dmode" id="dbtn"></label>
+      </div>
+    </div>
+
+      <div id="main">
+        <div id="section">
+           
+            <input type="text" id="input" placeholder="Enter the task.."><br>
+            <button id="btn">click </button>
+            <button id="clrAll">Clear All</button>
+            <div id="result"></div>
+        </div>
+      </div>
+      
+      <script>
+        let txtinp = document.getElementById("input");
+        let btn = document.getElementById("btn");
+        let dbtn = document.getElementById("dbtn")
+        let result = document.getElementById("result");
+        let arr = []
+        let clrAll = document.getElementById('clrAll');
+        let bool = true
+      
+        window.addEventListener("load", function () {
+            if (localStorage.getItem("arr")) {
+                const parsedArr = JSON.parse(localStorage.getItem("arr"))
+                displayToDo(parsedArr)
+            }
+        })
+      
+        // create
+        btn.addEventListener("click", function () {
+            
+
+
+            // displayToDo(arr)
+            if (localStorage.getItem("arr")) {
+                const ParsedArr = JSON.parse(localStorage.getItem("arr"))
+                ParsedArr.push(input.value)
+                displayToDo(ParsedArr)
+                localStorage.setItem("arr", JSON.stringify(ParsedArr))
+            } else{
+              arr.push(input.value)
+              localStorage.setItem("arr",JSON.stringify(arr))
+              displayToDo(arr)
+            }
+        })
+      
+        //    read
+        function displayToDo(arr) {
+            result.innerHTML = ""
+            for (let i = 0; i < arr.length; i++) {
+                result.innerHTML += `
+           
+            <li>${arr[i]}</li>
+          
+            `
+            }
+        }
+        // clrAll
+        clrAll.addEventListener("click", function () {
+            arr.length = 0
+            displayToDo()
+        })
+      
+        // //    DELETE
+        function Delete(i) {
+            arr.splice(i, 1)
+            displayToDo(arr)
+        }
+      
+        dmode.addEventListener("click", function () {
+            if(bool == true){
+            result.style.background = "black";
+            result.style.color = "white"
+            
+            input.style.background="black";
+            input.style.color="white";
+            section.style.background="black";
+            btn.style.background="orange";
+            clrAll.style.background="pink";
+            dbtn.classList = "fa-solid fa-moon fa-xl"
+            bool = false;
+           
+          }else{
+            result.style.background = "white";
+            result.style.color = "black"
+           
+            input.style.background="white";
+            input.style.color = "black"
+            section.style.background="blanchedalmond";
+            section.style.color = "black";
+            btn.style.background="blue"
+            clrAll.style.background="blue"
+            dbtn.classList = "fa-solid fa-sun fa-xl"
+            bool = true;
+          }
+        })
+      
+      </script>
+</body>
+</html>
+
+
+
+
